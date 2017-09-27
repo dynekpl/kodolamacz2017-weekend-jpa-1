@@ -11,11 +11,11 @@ public class Town {
     private int id;
 
     private String name;
-    private int inhabitantsCount;
+    private int inhabitants_Count;
 
     public Town(String name, int inhabitantsCount) {
         this.name = name;
-        this.inhabitantsCount = inhabitantsCount;
+        this.inhabitants_Count = inhabitantsCount;
     }
 
     public Town() {
@@ -26,7 +26,7 @@ public class Town {
         return "Town{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", inhabitantsCount=" + inhabitantsCount +
+                ", inhabitantsCount=" + inhabitants_Count +
                 '}';
     }
 
@@ -39,6 +39,6 @@ public class Town {
     }
 
     public int getInhabitantsCount() {
-        return inhabitantsCount;
+        return inhabitants_Count;
     }
 }
