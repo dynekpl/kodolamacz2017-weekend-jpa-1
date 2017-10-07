@@ -1,9 +1,15 @@
 package weekend;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "notebooks")
+@NamedQueries({
+        @NamedQuery(name = "Notebook.findAll", query = "select n from Notebook n"),
+        @NamedQuery(name = "Notebook.findById", query = "select n from Notebook n where n.id = :ID"),
+        @NamedQuery(name = "Notebook.getParameters", query = "select new weekend.notebook.Parameters(n.resolution, n.proccessor, n.ram) from Notebook n")
+})
 public class Notebook {
 
     @Id
@@ -11,7 +17,13 @@ public class Notebook {
     private int id;
 
     private String model;
+
     private int resolution;
+    private String proccessor;
+    private int ram;
+
+    @Temporal(TemporalType.DATE)
+    private Date prodDate;
 
     public Notebook(String model, int resolution) {
         this.model = model;
@@ -43,5 +55,13 @@ public class Notebook {
 
     public int getResolution() {
         return resolution;
+    }
+
+    public Date getProdDate() {
+        return prodDate;
+    }
+
+    public void setProdDate(Date prodDate) {
+        this.prodDate = prodDate;
     }
 }
