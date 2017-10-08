@@ -1,6 +1,9 @@
 package weekend;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -16,18 +19,27 @@ public class Notebook {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Size(max = 10)
+    @NotNull
     private String model;
 
     private int resolution;
+
+    @Size(min = 4, message = "Przy użyciu mniej niż 4 znaków nie da się precyzyjnie określić procesora")
     private String proccessor;
     private int ram;
 
+    @Future
     @Temporal(TemporalType.DATE)
-    private Date prodDate;
+    private Date warrantyDate;
 
     public Notebook(String model, int resolution) {
         this.model = model;
         this.resolution = resolution;
+    }
+
+    public Notebook(String model) {
+        this(model, 0);
     }
 
     public Notebook() {
@@ -57,11 +69,11 @@ public class Notebook {
         return resolution;
     }
 
-    public Date getProdDate() {
-        return prodDate;
+    public Date getWarrantyDate() {
+        return warrantyDate;
     }
 
-    public void setProdDate(Date prodDate) {
-        this.prodDate = prodDate;
+    public void setWarrantyDate(Date warrantyDate) {
+        this.warrantyDate = warrantyDate;
     }
 }

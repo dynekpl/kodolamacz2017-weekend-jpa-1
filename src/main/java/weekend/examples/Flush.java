@@ -14,7 +14,7 @@ public class Flush {
         transaction.begin();
 
         TypedQuery<Notebook> query = entityManager.createNamedQuery("Notebook.findAll", Notebook.class);
-        query.getResultList().stream().forEach(rs -> rs.setProdDate(new Date()));
+        query.getResultList().stream().forEach(rs -> rs.setWarrantyDate(new Date()));
 
         //TODO flush
 

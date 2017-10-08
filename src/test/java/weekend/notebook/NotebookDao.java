@@ -2,29 +2,68 @@ package weekend.notebook;
 
 import org.junit.AfterClass;
 import org.junit.Test;
+import weekend.Notebook;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class NotebookDao {
 
-    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("h2");
-    static EntityManager entityManager = entityManagerFactory.createEntityManager();
+    Notebook SUT; //System Under Test
 
     @Test
-    public void shouldReadParametersTest() {
-        TypedQuery<Parameters> query = entityManager.createNamedQuery("Notebook.getParameters", Parameters.class);
-        List<Parameters> results = query.getResultList();
+    public void shouldTestMaximumNotebookNameValidation() {
+        // given
+        SUT = new Notebook();
+        SUT.setModel("Tani super model prosto z Chin");
 
-        System.out.println(results);
+        // when
+        List<String> validationMessagesList = validateNotebookField(SUT, "model");
+
+        // then
+        assertThat(validationMessagesList).contains("size must be between 0 and 10");
     }
 
-    @AfterClass
-    public static void clean() {
-        entityManager.close();
-        entityManagerFactory.close();
+    @Test
+    public void shouldTestNoNotebookNameValidation() {
+        // given
+        SUT = new Notebook();
+        SUT.setModel(null);
+
+        // when
+        List<String> validationMessagesList = validateNotebookField(SUT, "model");
+
+        // then
+        assertThat(validationMessagesList).contains("may not be null");
+    }
+
+    private List<String> validateNotebookField(Notebook notebook, String field) {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<Notebook>> constraintViolations = validator.validateProperty(notebook, field);
+
+        System.out.println(constraintViolations.size() + " pola nie przeszły walidacji");
+        constraintViolations.stream().forEach(cv -> System.out.println("!!! " + cv.getMessage()));
+
+        return constraintViolations
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+    }
+    
+    @Test
+    public void shouldValidateWarrantyDateTest(){
+       // given
+       
+       // when
+       
+       // then
+       
     }
 }
