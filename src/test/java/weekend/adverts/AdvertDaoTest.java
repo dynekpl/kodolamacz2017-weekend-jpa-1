@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.*;
 
 public class AdvertDaoTest {
 
-    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("postgres-test");
+    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("docker");
     static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     static AdvertDao advertDao = new JpqlAdvertDao(entityManager);

@@ -26,4 +26,28 @@
             <!--<property name="hibernate.naming-strategy" value="validate"/>-->
         </properties>
     </persistence-unit>
+    <persistence-unit name="h2" transaction-type="RESOURCE_LOCAL">
+        <class>weekend.Notebook</class>
+        <class>weekend.adverts.Advert</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/test"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <!--<property name="hibernate.naming-strategy" value="validate"/>-->
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="docker" transaction-type="RESOURCE_LOCAL">
+        <class>weekend.Notebook</class>
+        <class>weekend.adverts.Advert</class>
+        <class>weekend.adverts.User</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.99.100:5432/kodolamacz"/>
+            <property name="javax.persistence.jdbc.user" value="dyneck"/>
+            <property name="javax.persistence.jdbc.password" value="pass123"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+        </properties>
+    </persistence-unit>
 </persistence>
